@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vido - Maintenance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0f0f0f;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .box {
+      max-width: 500px;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .spinner {
+      margin: 20px auto;
+      width: 60px;
+      height: 60px;
+      border: 6px solid #333;
+      border-top: 6px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .small {
+      margin-top: 20px;
+      font-size: 14px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h1>Vido</h1>
+    <div class="spinner"></div>
+    <p>
+      We’re doing some quick maintenance.<br>
+      Vido will be back soon — faster, better, and less on fire 🔧
+    </p>
+    <div class="small">
+      If this takes too long, someone probably broke something important.
+    </div>
+  </div>
+</body>
+</html>
