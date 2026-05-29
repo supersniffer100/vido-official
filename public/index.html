@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vido</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Local video platform</p>
+          <h1>Vido</h1>
+          <p class="hero-copy">
+            Your own YouTube-style app running entirely on your computer.
+          </p>
+        </div>
+        <form id="search-form" class="search-bar">
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Search all uploaded videos"
+            aria-label="Search videos"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </header>
+
+      <main class="layout">
+        <aside class="profile-card">
+          <div id="signed-in-panel" class="hidden">
+            <div class="profile-top">
+              <img id="profile-picture" class="avatar" alt="Profile picture" />
+              <div class="profile-heading">
+                <p class="card-label">Profile</p>
+                <h2 id="profile-name">Vido Creator</h2>
+              </div>
+            </div>
+
+            <button id="logout-button" class="logout-button" type="button">Log out</button>
+
+            <form id="name-form" class="stack">
+              <label for="display-name">Display name</label>
+              <input id="display-name" maxlength="40" required />
+              <button type="submit">Save name</button>
+            </form>
+
+            <form id="picture-form" class="stack">
+              <label for="picture-input">Profile picture</label>
+              <input id="picture-input" type="file" accept="image/png,image/jpeg,image/webp" required />
+              <button type="submit">Upload picture</button>
+            </form>
+
+            <form id="password-form" class="stack">
+              <label for="current-password">Current password</label>
+              <input id="current-password" type="password" autocomplete="current-password" />
+              <label for="new-password">New password</label>
+              <input id="new-password" type="password" autocomplete="new-password" minlength="4" required />
+              <button type="submit">Save password</button>
+            </form>
+          </div>
+
+          <div id="signed-out-panel" class="auth-panels">
+            <section class="auth-section">
+              <p class="card-label">Log In</p>
+              <form id="login-form" class="stack">
+                <label for="login-name">Username</label>
+                <input id="login-name" maxlength="40" required />
+                <label for="login-password">Password</label>
+                <input id="login-password" type="password" autocomplete="current-password" />
+                <button type="submit">Log in</button>
+              </form>
+            </section>
+
+            <section class="auth-section">
+              <p class="card-label">Sign Up</p>
+              <form id="signup-form" class="stack">
+                <label for="signup-name">Username</label>
+                <input id="signup-name" maxlength="40" required />
+                <label for="signup-password">Password</label>
+                <input id="signup-password" type="password" autocomplete="new-password" minlength="4" required />
+                <button type="submit">Create account</button>
+              </form>
+            </section>
+          </div>
+        </aside>
+
+        <section class="content">
+          <div class="panel upload-panel">
+            <div>
+              <p class="card-label">Upload</p>
+              <h2>Add a video</h2>
+              <p id="upload-copy" class="panel-copy">
+                Upload an MP4 and it will appear on the home page until the first 100 visible slots are filled.
+              </p>
+            </div>
+            <form id="video-form" class="upload-form">
+              <input id="video-title" maxlength="100" placeholder="Video title" required />
+              <input id="video-input" type="file" accept="video/mp4" required />
+              <button type="submit">Upload video</button>
+            </form>
+          </div>
+
+          <div class="section-head">
+            <div>
+              <p class="card-label">Library</p>
+              <h2 id="section-title">Main menu videos</h2>
+            </div>
+            <p id="section-copy" class="section-copy">
+              Showing videos visible on the home page.
+            </p>
+          </div>
+
+          <p id="status" class="status" aria-live="polite"></p>
+          <div id="video-grid" class="video-grid"></div>
+          <p id="empty-state" class="empty-state" hidden>No videos yet. Upload the first one to get started.</p>
+        </section>
+      </main>
+    </div>
+
+    <template id="video-card-template">
+      <article class="video-card" tabindex="0" role="button">
+        <div class="video-meta">
+          <div class="video-meta-top">
+            <h3></h3>
+            <button class="delete-button" type="button" aria-label="Delete video" hidden>Trash</button>
+          </div>
+          <button class="uploader-link" type="button"></button>
+          <p class="video-date"></p>
+          <p class="video-tag"></p>
+        </div>
+      </article>
+    </template>
+
+    <dialog id="watch-dialog" class="watch-dialog">
+      <div class="watch-shell">
+        <button id="close-dialog" class="dialog-close" type="button" aria-label="Close player">Close</button>
+        <p class="card-label">Now watching</p>
+        <h2 id="dialog-title"></h2>
+        <div class="dialog-meta-row">
+          <button id="dialog-uploader" class="uploader-link" type="button"></button>
+          <p id="dialog-meta" class="section-copy"></p>
+        </div>
+        <video id="dialog-video" controls preload="metadata"></video>
+        <section class="comments-section">
+          <div class="section-head comments-head">
+            <div>
+              <p class="card-label">Comments</p>
+              <h2 id="comments-title">Comments</h2>
+            </div>
+            <p id="comments-copy" class="section-copy">Join the conversation below.</p>
+          </div>
+
+          <form id="comment-form" class="stack">
+            <label for="comment-input">Add a comment</label>
+            <textarea id="comment-input" rows="4" maxlength="500" placeholder="Write your comment here"></textarea>
+            <button type="submit">Post comment</button>
+          </form>
+
+          <p id="comment-login-note" class="section-copy hidden">Log in to post a comment.</p>
+          <div id="comments-list" class="comments-list"></div>
+          <p id="comments-empty" class="empty-state" hidden>No comments yet. Be the first to post one.</p>
+        </section>
+      </div>
+    </dialog>
+
+    <dialog id="profile-dialog" class="watch-dialog">
+      <div class="watch-shell">
+        <button id="close-profile-dialog" class="dialog-close" type="button" aria-label="Close profile">Close</button>
+        <div class="creator-header">
+          <img id="creator-picture" class="avatar creator-avatar" alt="Creator profile picture" />
+          <div>
+            <p class="card-label">Creator profile</p>
+            <h2 id="creator-name"></h2>
+            <p id="creator-followers" class="section-copy"></p>
+          </div>
+        </div>
+        <button id="follow-button" class="follow-button hidden" type="button"></button>
+        <p class="section-copy">All videos uploaded by this creator.</p>
+        <div id="creator-video-grid" class="video-grid creator-video-grid"></div>
+        <p id="creator-empty-state" class="empty-state" hidden>This creator has not uploaded any videos yet.</p>
+      </div>
+    </dialog>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
